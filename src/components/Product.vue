@@ -1,14 +1,14 @@
 <template>
   <div>
     <h1>product list</h1>
-    <div v-for="product in products" :key="product">
+    <div v-for="(product, index) in allProducts.products" :key="index">
       {{ product.title }}
     </div>
   </div>
 </template>
 
 <script>
-import EcommerceServices from '@/services/EcommerceServices.js'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'products',
   data() {
@@ -20,10 +20,10 @@ export default {
     this.getProducts()
   },
   methods: {
-    async getProducts() {
-      const response = await EcommerceServices.fetchProducts()
-      this.products = response.data
-    }
+    ...mapActions(['getProducts'])
+  },
+  computed: {
+    ...mapGetters(['allProducts'])
   }
 }
 </script>
